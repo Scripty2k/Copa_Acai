@@ -133,6 +133,7 @@ const handleSignOut = () =>{
   color: #333;
   text-decoration: none;
   padding: 0.5rem 1.2rem;
+  margin-bottom: 1rem;
   border: none;
   background: none;
   border-radius: 6px;
@@ -150,6 +151,7 @@ const handleSignOut = () =>{
 }
 .logout-btn:hover {
   background: var(--primary-color, #4392F1);
+  margin-bottom: 1rem;
   color: #fff;
 }
 </style>
