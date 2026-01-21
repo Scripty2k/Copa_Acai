@@ -4,4 +4,7 @@ import router from "./router";
 import appFirebase from "./firebase";
 import './assets/styles/global.css';
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+app.use(router);
+
+app.mount("#app");
