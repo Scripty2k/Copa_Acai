@@ -1,10 +1,6 @@
 <script setup>
-import { ref } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
-import RegisterForm from '@/components/RegisterForm.vue';
 import SideBar from '../components/SideBar.vue';
-
-const showRegister = ref(false);  // false means show login form, true means show register form
 </script>
 
 <template>
@@ -13,19 +9,8 @@ const showRegister = ref(false);  // false means show login form, true means sho
     <div class="main-content">
       <div class="auth-container">
         <div class="auth-card">
-          <h1>{{ showRegister ? 'Register' : 'Login' }}</h1>
-          <LoginForm v-if="!showRegister" />
-          <RegisterForm v-else />
-          <div class="switch-link">
-            <span v-if="!showRegister">
-              Don't have an account?
-              <a href="#" @click.prevent="showRegister = true">Register</a>
-            </span>
-            <span v-else>
-              Already have an account?
-              <a href="#" @click.prevent="showRegister = false">Login</a>
-            </span>
-          </div>
+          <h1>Login</h1>
+          <LoginForm />
         </div>
       </div>
     </div>
@@ -74,16 +59,5 @@ const showRegister = ref(false);  // false means show login form, true means sho
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
-}
-.switch-link {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 1rem;
-}
-.switch-link a {
-  color: var(--primary-color, #4392F1);
-  text-decoration: underline;
-  cursor: pointer;
-  margin-left: 0.25rem;
 }
 </style>
