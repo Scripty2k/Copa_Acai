@@ -1,14 +1,27 @@
 <script setup>
+import { defineEmits } from 'vue';
+
 const props = defineProps({
   id: String,
   name: String
 });
+
+const emit = defineEmits(['delete']);
+
+function handleDelete() {
+  if (confirm(`Are you sure you want to delete "${props.name}"?`)) {
+    emit('delete', props.id);
+  }
+}
 </script>
 
 <template>
   <div class="item-card">
     <div class="item-info">
       <h3>{{ name }}</h3>
+      <button @click="handleDelete" class="delete-btn" title="Delete item">
+        Delete
+      </button>
     </div>
   </div>
 </template>
@@ -64,5 +77,28 @@ h3 {
   padding: 0.75rem;
   border: none;
   border-radius: 6px;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #dc3545;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: auto;
+
+  &:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 </style>

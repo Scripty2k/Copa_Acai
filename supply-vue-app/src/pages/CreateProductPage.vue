@@ -30,11 +30,21 @@ async function submitPost() {
   isLoading.value = true;
   try {
     console.log('Starting item creation process...');
+    
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    
+    if (!currentUser) {
+      error.value = "You must be logged in to create items.";
+      isLoading.value = false;
+      return;
+    }
 
     // Add item to Firestore
     console.log('Adding item to Firestore...');
     const docRef = await addDoc(collection(db, "items"), {
       name: title.value,
+      ownerId: currentUser.uid,
       createdAt: serverTimestamp()
     });
     console.log('Item added successfully with ID:', docRef.id);

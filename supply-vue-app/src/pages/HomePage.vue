@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from 'vue-router';
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import SideBar from '../components/SideBar.vue';
 import ProductCard from '../components/ProductCard.vue';
@@ -44,6 +44,22 @@ function goToCreateProduct() {
   }
   router.push('/create-product');
 }
+
+async function deleteItem(itemId) {
+  console.log('Delete function called with itemId:', itemId);
+  try {
+    console.log('Attempting to delete document from Firestore...');
+    await deleteDoc(doc(db, "items", itemId));
+    console.log('Document deleted from Firestore');
+    // Remove the item from the local array
+    items.value = items.value.filter(item => item.id !== itemId);
+    console.log('Item deleted successfully, remaining items:', items.value.length);
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    console.error("Error details:", error.message);
+    alert('Failed to delete item: ' + error.message);
+  }
+}
 </script>
 
 <template>
@@ -69,6 +85,7 @@ function goToCreateProduct() {
           :key="item.id"
           :id="item.id"
           :name="item.name"
+          @delete="deleteItem"
         />
       </div>
     </div>
