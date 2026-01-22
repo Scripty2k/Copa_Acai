@@ -23,7 +23,7 @@ onMounted(() => {
 onMounted(async () => {
   try {
     console.log('Fetching items from Firestore...');
-    const q = query(collection(db, "items"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
     items.value = querySnapshot.docs.map(doc => ({
       id: doc.id,
@@ -49,7 +49,7 @@ async function deleteItem(itemId) {
   console.log('Delete function called with itemId:', itemId);
   try {
     console.log('Attempting to delete document from Firestore...');
-    await deleteDoc(doc(db, "items", itemId));
+    await deleteDoc(doc(db, "products", itemId));
     console.log('Document deleted from Firestore');
     // Remove the item from the local array
     items.value = items.value.filter(item => item.id !== itemId);

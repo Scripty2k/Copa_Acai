@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.vue'
 import CreateProductPage from './pages/CreateProductPage.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import RestockPage from './pages/RestockPage.vue'
+import NotAuthorizedPage from './pages/NotAuthorizedPage.vue'
 
 const ADMIN_UID = "PASTE_YOUR_UID_HERE";
 

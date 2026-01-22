@@ -42,7 +42,7 @@ async function submitPost() {
 
     // Add item to Firestore
     console.log('Adding item to Firestore...');
-    const docRef = await addDoc(collection(db, "items"), {
+    const docRef = await addDoc(collection(db, "products"), {
       name: title.value,
       ownerId: currentUser.uid,
       createdAt: serverTimestamp()
