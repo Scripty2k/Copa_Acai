@@ -9,7 +9,7 @@
         <nav>
           <router-link to="/" class="">Products</router-link>
           <router-link to="/profile" class="" v-if="isLoggedIn">Profile</router-link>
-          <router-link to="/login" class="">Login</router-link>
+          <router-link to="/login" class="" v-if="!isLoggedIn">Login</router-link>
         </nav>
       </div>
     </div>
@@ -83,7 +83,7 @@ const handleSignOut = () =>{
   align-items: center;
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: #555;
+  color: #1c1c1c;
   font-weight: 500;
 }
 .sidebar-nav nav {
@@ -100,14 +100,14 @@ const handleSignOut = () =>{
 }
 .sidebar-nav .router-link-active,
 .sidebar-nav .router-link-exact-active {
-  color: var(--primary-color, #4392F1);
+  color: var(--primary-color, #f5ead7);
   font-weight: 700;
-  background: #e3ebff;
+  background: #fdf7f0;
   border-radius: 6px;
 }
 .sidebar-nav a {
   font-size: 1.1rem;
-  color: #333;
+  color: #1c1c1c;
   text-decoration: none;
   padding: 0.5rem 1.2rem;
   border: none;
@@ -125,12 +125,12 @@ const handleSignOut = () =>{
   display: block;
 }
 .sidebar-nav a:hover {
-  background: var(--primary-color, #4392F1);
+  background: var(--primary-color, #f5ead7);
   color: #fff;
 }
 .logout-btn {
   font-size: 1.1rem;
-  color: #333;
+  color: #1c1c1c;
   text-decoration: none;
   padding: 0.5rem 1.2rem;
   margin-bottom: 1rem;
@@ -150,7 +150,7 @@ const handleSignOut = () =>{
   background: #fff;
 }
 .logout-btn:hover {
-  background: var(--primary-color, #4392F1);
+  background: var(--primary-color, #f5ead7);
   margin-bottom: 1rem;
   color: #fff;
 }

@@ -55,7 +55,7 @@ import SideBar from '../components/SideBar.vue';
 }
 .auth-card h1 {
   margin-bottom: 1.5rem;
-  color: var(--primary-color, #4392F1);
+  color: var(--primary-color, #1c1c1c);
   font-size: 2rem;
   font-weight: 700;
   text-align: center;

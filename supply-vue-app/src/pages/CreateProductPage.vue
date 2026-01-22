@@ -68,7 +68,7 @@ async function submitPost() {
 }
 .button {
   padding: 10px 20px;
-  background: var(--primary-color, #4392F1);
+  background: var(--primary-color, #1c1c1c);
   color: #fff;
   border: none;
   border-radius: 4px;

@@ -22,7 +22,7 @@ defineProps({
   margin-top: 0;
 }
 .post-card a {
-  color: var(--primary-color, #4392F1);
+  color: var(--primary-color, #f5ead7);
   text-decoration: underline;
 }
 </style>
