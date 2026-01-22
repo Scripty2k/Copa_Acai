@@ -27,11 +27,6 @@ async function submitPost() {
     return;
   }
 
-  if (isNaN(quantity.value) || quantity.value < 0) {
-    error.value = "Quantity must be a valid positive number.";
-    return;
-  }
-
   isLoading.value = true;
   try {
     console.log('Starting item creation process...');
@@ -40,7 +35,6 @@ async function submitPost() {
     console.log('Adding item to Firestore...');
     const docRef = await addDoc(collection(db, "items"), {
       name: title.value,
-      quantity: 0,
       createdAt: serverTimestamp()
     });
     console.log('Item added successfully with ID:', docRef.id);

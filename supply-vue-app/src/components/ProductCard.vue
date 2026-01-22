@@ -1,67 +1,14 @@
 <script setup>
-import { ref } from 'vue';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-
 const props = defineProps({
   id: String,
-  name: String,
-  quantity: Number
+  name: String
 });
-
-const localQuantity = ref(props.quantity);
-const isUpdating = ref(false);
-
-const updateQuantity = async (delta) => {
-  const newQuantity = Math.max(0, localQuantity.value + delta);
-  const previousQuantity = localQuantity.value;
-  localQuantity.value = newQuantity;
-  
-  try {
-    isUpdating.value = true;
-    console.log(`Updating quantity from ${previousQuantity} to ${newQuantity} for item ${props.id}`);
-    
-    const itemRef = doc(db, 'items', props.id);
-    await updateDoc(itemRef, {
-      quantity: newQuantity
-    });
-    console.log('Quantity updated successfully');
-  } catch (error) {
-    console.error('Error updating quantity:', error);
-    // Revert on error
-    localQuantity.value = previousQuantity;
-  } finally {
-    isUpdating.value = false;
-  }
-};
-
-const decreaseQuantity = () => updateQuantity(-1);
-const increaseQuantity = () => updateQuantity(1);
 </script>
 
 <template>
   <div class="item-card">
     <div class="item-info">
       <h3>{{ name }}</h3>
-      <div class="quantity-display">Qty: {{ localQuantity }}</div>
-      <div class="quantity-controls">
-        <button 
-          @click="decreaseQuantity" 
-          class="btn decrease-btn"
-          :disabled="isUpdating"
-          aria-label="Decrease quantity"
-        >
-          −
-        </button>
-        <button 
-          @click="increaseQuantity" 
-          class="btn increase-btn"
-          :disabled="isUpdating"
-          aria-label="Increase quantity"
-        >
-          +
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -117,47 +64,5 @@ h3 {
   padding: 0.75rem;
   border: none;
   border-radius: 6px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-.decrease-btn {
-  background: #e53935;
-  color: white;
-
-  &:hover:not(:disabled) {
-    background: #d32f2f;
-    box-shadow: var(--shadow-md);
-    transform: scale(1.05);
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.95);
-  }
-}
-
-.increase-btn {
-  background: #4caf50;
-  color: white;
-
-  &:hover:not(:disabled) {
-    background: #45a049;
-    box-shadow: var(--shadow-md);
-    transform: scale(1.05);
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.95);
-  }
 }
 </style>
