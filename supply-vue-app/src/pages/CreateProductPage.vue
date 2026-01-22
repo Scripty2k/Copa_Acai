@@ -2,14 +2,10 @@
 import { ref } from 'vue';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from 'vue-router';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const title = ref('');
-const quantity = ref('');
-const imageFile = ref(null);
-const imagePreview = ref(null);
 const error = ref('');
 const isLoading = ref(false);
 const router = useRouter();
@@ -22,24 +18,12 @@ onAuthStateChanged(getAuth(), (user) => {
   }
 });
 
-const handleImageSelect = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    imageFile.value = file;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      imagePreview.value = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
 async function submitPost() {
   // Reset previous errors
   error.value = '';
 
-  if (!title.value || !quantity.value || !imageFile.value) {
-    error.value = "All fields are required.";
+  if (!title.value) {
+    error.value = "Item name is required.";
     return;
   }
 
@@ -51,33 +35,18 @@ async function submitPost() {
   isLoading.value = true;
   try {
     console.log('Starting item creation process...');
-    
-    // Upload image to Firebase Storage
-    const imageFileName = `items/${Date.now()}_${imageFile.value.name}`;
-    console.log('Uploading image to:', imageFileName);
-    
-    const imageStorageRef = storageRef(storage, imageFileName);
-    await uploadBytes(imageStorageRef, imageFile.value);
-    console.log('Image uploaded successfully');
-    
-    const imageUrl = await getDownloadURL(imageStorageRef);
-    console.log('Image URL obtained:', imageUrl);
 
     // Add item to Firestore
     console.log('Adding item to Firestore...');
     const docRef = await addDoc(collection(db, "items"), {
       name: title.value,
-      quantity: parseInt(quantity.value),
-      imageUrl: imageUrl,
+      quantity: 0,
       createdAt: serverTimestamp()
     });
     console.log('Item added successfully with ID:', docRef.id);
     
     // Reset form
     title.value = '';
-    quantity.value = '';
-    imageFile.value = null;
-    imagePreview.value = null;
     
     // Wait a moment before routing
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -93,11 +62,6 @@ async function submitPost() {
     isLoading.value = false;
   }
 }
-
-const clearImage = () => {
-  imageFile.value = null;
-  imagePreview.value = null;
-};
 
 const goBack = () => {
   router.back();
@@ -115,20 +79,6 @@ const goBack = () => {
         <div>
           <label>Item Name:</label>
           <input v-model="title" type="text" placeholder="e.g., Açai Bowl" required />
-        </div>
-
-        <div>
-          <label>Quantity:</label>
-          <input v-model="quantity" type="number" placeholder="0" min="0" required />
-        </div>
-
-        <div class="image-upload">
-          <label>Item Image:</label>
-          <div v-if="imagePreview" class="image-preview">
-            <img :src="imagePreview" alt="Preview" />
-            <button type="button" @click="clearImage" class="clear-btn">Remove Image</button>
-          </div>
-          <input v-else type="file" @change="handleImageSelect" accept="image/*" required />
         </div>
 
         <button type="submit" class="button" :disabled="isLoading">
@@ -219,46 +169,6 @@ input[type="file"]:focus {
   outline: none;
   border-color: #f5ead7;
   box-shadow: 0 0 0 3px rgba(245, 234, 215, 0.1);
-}
-
-.image-upload {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.image-preview {
-  position: relative;
-  width: 100%;
-  max-width: 300px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-
-.image-preview img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  display: block;
-}
-
-.clear-btn {
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
-  background: #e53935;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s ease;
-}
-
-.clear-btn:hover {
-  background: #d32f2f;
 }
 
 .button {

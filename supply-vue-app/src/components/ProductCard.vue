@@ -6,8 +6,7 @@ import { db } from '../firebase';
 const props = defineProps({
   id: String,
   name: String,
-  quantity: Number,
-  imageUrl: String
+  quantity: Number
 });
 
 const localQuantity = ref(props.quantity);
@@ -42,9 +41,6 @@ const increaseQuantity = () => updateQuantity(1);
 
 <template>
   <div class="item-card">
-    <div class="image-container">
-      <img :src="imageUrl" :alt="name" />
-    </div>
     <div class="item-info">
       <h3>{{ name }}</h3>
       <div class="quantity-display">Qty: {{ localQuantity }}</div>
@@ -87,24 +83,6 @@ const increaseQuantity = () => updateQuantity(1);
     box-shadow: var(--shadow-lg);
     border-color: #f5ead7;
   }
-}
-
-.image-container {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  background: #f9f9f9;
-}
-
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.item-card:hover .image-container img {
-  transform: scale(1.05);
 }
 
 .item-info {

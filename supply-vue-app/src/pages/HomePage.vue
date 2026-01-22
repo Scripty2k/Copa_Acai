@@ -53,7 +53,6 @@ function goToCreateProduct() {
       <div class="header">
         <h1>Storage Management</h1>
         <button v-if="isLoggedIn" @click="goToCreateProduct" class="button add-btn">
-          <img src="../assets/images/more.png" width="24px" height="24px" alt="Add item" />
           Add Item
         </button>
       </div>
@@ -62,9 +61,6 @@ function goToCreateProduct() {
       
       <div v-else-if="items.length === 0" class="empty-state">
         <p>No items yet. Start by adding your first storage item!</p>
-        <button v-if="isLoggedIn" @click="goToCreateProduct" class="button">
-          Add Your First Item
-        </button>
       </div>
 
       <div v-else class="items-grid">
@@ -74,7 +70,6 @@ function goToCreateProduct() {
           :id="item.id"
           :name="item.name"
           :quantity="item.quantity"
-          :imageUrl="item.imageUrl"
         />
       </div>
     </div>
