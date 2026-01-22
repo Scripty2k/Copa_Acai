@@ -69,7 +69,6 @@ function goToCreateProduct() {
           :key="item.id"
           :id="item.id"
           :name="item.name"
-          :quantity="item.quantity"
         />
       </div>
     </div>
