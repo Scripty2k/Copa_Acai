@@ -13,7 +13,7 @@
         <div class="sidebar-nav">
           <nav>
             <router-link to="/" class="" @click="closeSidebar">Products</router-link>
-            <router-link to="/profile" class="" v-if="isLoggedIn" @click="closeSidebar">Profile</router-link>
+            <router-link to="/restock" class="" v-if="isLoggedIn" @click="closeSidebar">Restock</router-link>
             <router-link to="/login" class="" v-if="!isLoggedIn" @click="closeSidebar">Login</router-link>
           </nav>
         </div>
