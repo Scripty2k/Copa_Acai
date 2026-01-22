@@ -7,7 +7,7 @@
       <button class="close-btn" @click="closeSidebar" aria-label="Close sidebar">✕</button>
       <div class="sidebar-content">
         <div class="sidebar-header">
-          <h2>Copa Açai</h2>
+          <img src="../assets/images/logo.png" alt="Copa Açai Logo" class="logo" />
           <div v-if="isLoggedIn" class="sidebar-user"><span>Hello,</span><span>{{ userEmail }}</span></div>
         </div>
         <div class="sidebar-nav">
@@ -238,6 +238,12 @@ defineExpose({
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.logo {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 0.5rem;
 }
 
 .sidebar-user {

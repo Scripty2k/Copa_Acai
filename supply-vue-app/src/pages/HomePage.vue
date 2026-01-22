@@ -9,8 +9,9 @@ import ProductCard from '../components/ProductCard.vue';
 
 const isLoggedIn = ref(false);
 const router = useRouter();
-const products = ref([]);
+const items = ref([]);
 const sidebarRef = ref(null);
+const isLoading = ref(true);
 
 onMounted(() => {
   const auth = getAuth();
@@ -20,9 +21,20 @@ onMounted(() => {
 });
 
 onMounted(async () => {
-  const q = query(collection(db, "products"), orderBy("createdAt"));
-  const querySnapshot = await getDocs(q);
-  products.value = querySnapshot.docs.map(doc => doc.data());
+  try {
+    console.log('Fetching items from Firestore...');
+    const q = query(collection(db, "items"), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    items.value = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    console.log('Items loaded:', items.value.length);
+  } catch (error) {
+    console.error("Error fetching items:", error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 function goToCreateProduct() {
@@ -38,14 +50,33 @@ function goToCreateProduct() {
   <div class="layout">
     <SideBar ref="sidebarRef" />
     <div class="main-content">
-      <div class="create-post-button">
-        <button v-if="isLoggedIn" @click="goToCreateProduct" class="button"><img src="../assets/images/more.png" width="30px" height="30px"></button>
+      <div class="header">
+        <h1>Storage Management</h1>
+        <button v-if="isLoggedIn" @click="goToCreateProduct" class="button add-btn">
+          <img src="../assets/images/more.png" width="24px" height="24px" alt="Add item" />
+          Add Item
+        </button>
       </div>
-      <ProductCard
-        v-for="(product, idx) in products"
-        :key="idx"
-        :title="product.title"
-      />
+
+      <div v-if="isLoading" class="loading">Loading items...</div>
+      
+      <div v-else-if="items.length === 0" class="empty-state">
+        <p>No items yet. Start by adding your first storage item!</p>
+        <button v-if="isLoggedIn" @click="goToCreateProduct" class="button">
+          Add Your First Item
+        </button>
+      </div>
+
+      <div v-else class="items-grid">
+        <ProductCard
+          v-for="item in items"
+          :key="item.id"
+          :id="item.id"
+          :name="item.name"
+          :quantity="item.quantity"
+          :imageUrl="item.imageUrl"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -61,21 +92,10 @@ function goToCreateProduct() {
   }
 }
 
-.sidebar {
-  width: 250px;
-  border-right: 1px solid #ccc;
-  padding: 2rem 1rem;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    border-right: none;
-  }
-}
-
 .main-content {
   flex: 1;
   padding: 2rem 3rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
 
@@ -89,35 +109,97 @@ function goToCreateProduct() {
   }
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+
+  h1 {
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 1.75rem;
+    }
+  }
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+.loading,
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-color);
+}
+
+.loading {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 400px;
+  }
+}
+
 .button {
   background-color: #f5ead7;
+  color: #1c1c1c;
   border: none;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
   transition: all 0.2s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-sm);
-}
+  font-weight: 600;
 
-.button:hover {
-  box-shadow: var(--shadow-md);
-  transform: scale(1.05);
-}
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
 
-.button:active {
-  transform: scale(0.98);
-}
-
-.create-post-button {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 2rem;
-
-  @media (max-width: 480px) {
-    margin-bottom: 1rem;
+  &:active {
+    transform: translateY(0);
   }
 }
 </style>
