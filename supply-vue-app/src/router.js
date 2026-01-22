@@ -1,24 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from './pages/HomePage.vue'
-import ProfilePage from './pages/ProfilePage.vue'
 import LoginPage from './pages/LoginPage.vue'
 import CreateProductPage from './pages/CreateProductPage.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import RestockPage from './pages/RestockPage.vue'
+
+const ADMIN_UID = "PASTE_YOUR_UID_HERE";
+
 
 const routes = [
     {
         path: '/',
         name: 'Home',
         component: HomePage
-    },
-    {
-        path: '/profile',
-        name: 'Profile',
-        component: ProfilePage,
-        meta: {
-            requiresAuth: true,
-        },
     },
     {
         path: '/login',
@@ -32,17 +27,29 @@ const routes = [
         meta: {
             requiresAuth: true,
         },
+    },
+    {
+        path: '/restock',
+        name: 'Restock',
+        component: RestockPage,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: '/not-authorized',
+        name: 'NotAuthorized',
+        component: NotAuthorizedPage
     }
 ]
 
 // Create the router instance
 const router = createRouter({
-    history: createWebHistory(), // use history mode for cleaner URLs
+    history: createWebHistory(),
     routes
 })
 
-
-// function to check if user is authenticated
+// Helper to get current user
 const GetCurrentUser = () => {
     return new Promise((resolve, reject) => {
         const removeListener = onAuthStateChanged(
@@ -56,18 +63,29 @@ const GetCurrentUser = () => {
     });
 };
 
-
-//  this code runs before each route change
+// Navigation guard
 router.beforeEach(async (to, from, next) => {
-    if (to.matched.some((record => record.meta.requiresAuth)))     {; // check if route requires auth
-        if (await GetCurrentUser()) { //If logged in, navigation continues.
-            next();
-        } else { //alert user that you need to be logged in and redirect to login page.
+    const user = await GetCurrentUser();
+
+    // 🔒 Check if route requires login
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!user) {
             alert("You must be logged in to access this page.");
             next("/login");
+            return;
         }
-    } else { // if auth is not required, navigation continues.
-        next();
     }
+
+    // 🔐 Check if route is only for your UID
+    if (to.matched.some(record => record.meta.onlyMe)) {
+        if (!user || user.uid !== ADMIN_UID) {
+            alert("You are not allowed to access this page.");
+            next("/not-authorized");
+            return;
+        }
+    }
+
+    next();
 });
-export default router
+
+export default router;

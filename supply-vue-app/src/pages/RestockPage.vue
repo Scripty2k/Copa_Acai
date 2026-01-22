@@ -1,4 +1,5 @@
 <script setup>
+import RestockList from '@/components/RestockList.vue';
 import SideBar from '../components/SideBar.vue';
 
 </script>
@@ -7,8 +8,9 @@ import SideBar from '../components/SideBar.vue';
   <div class="layout">
     <SideBar />
     <div class="main-content">
-        <div class="profile">
-            <h1>Profile Page</h1>
+        <div class="restock-page">
+            <h1>Restock Page</h1>
+            <RestockList />
         </div>
     </div>
   </div>
