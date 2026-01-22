@@ -1,66 +1,103 @@
 :root {
-  --primary-color: #4392F1;
-  --secondary-color: #E3EBFF;
-  --text-color: #333;
+  --primary-color: #1c1c1c;
+  --secondary-color: #fdf7f0;
+  --text-color: #1c1c1c;
   --background-color: #f9f9f9;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+@font-face {
+  font-family: 'MainMedium';
+  src: url('../../fonts/main-medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 main {
   font-family: 'Inter', sans-serif;
 }
 
-h1{
-    font-size: 40px;
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0.5rem 0;
+  font-family: 'MainMedium', sans-serif;
 }
 
-h2{
-    font-size: 32px;
+h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0.75rem 0;
+  font-family: 'MainMedium', sans-serif;
 }
 
-h3{
-    font-size: 24px;
+h3 {
+  font-size: 24px;
+  font-family: 'MainMedium', sans-serif;
+  font-weight: 600;
+  margin: 0.75rem 0;
 }
 
-h4{
-    font-size: 20px;
+h4 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0.5rem 0;
 }
 
-h5{
-    font-size: 16px;
+h5 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0.5rem 0;
 }
 
-p{
-    font-size: 16px;
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0.5rem 0;
 }
 
-.m1{
-    margin: 1rem;
+.m1 {
+  margin: 1rem;
 }
 
-.m1-5{
-    margin: 1.5rem;
+.m1-5 {
+  margin: 1.5rem;
 }
 
-.m2{
-    margin: 2rem;
+.m2 {
+  margin: 2rem;
 }
 
-.m3{
-    margin: 3rem;
+.m3 {
+  margin: 3rem;
 }
 
-.p1{
-    margin: 1rem;
+.p1 {
+  padding: 1rem;
 }
 
-.p1-5{
-    margin: 1.5rem;
+.p1-5 {
+  padding: 1.5rem;
 }
 
-.p2{
-    margin: 2rem;
+.p2 {
+  padding: 2rem;
 }
 
-.p3{
-    margin: 3rem;
+.p3 {
+  padding: 3rem;
 }

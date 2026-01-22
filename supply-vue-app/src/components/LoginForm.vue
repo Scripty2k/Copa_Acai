@@ -78,14 +78,14 @@ const login = async () => {
 
     button {
       padding: 10px;
-      background-color: #42b983;
+      background-color: #f5ead7;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
 
       &:hover {
-        background-color: #369870;
+        background-color: #e8d9bf;
       }
     }
   }
@@ -110,7 +110,7 @@ form {
 label {
   font-weight: 600;
   margin-bottom: 0.2rem;
-  color: #333;
+  color: #1c1c1c;
 }
 
 input[type="email"],
@@ -124,13 +124,13 @@ input[type="password"] {
 
 input[type="email"]:focus,
 input[type="password"]:focus {
-  border: 1.5px solid var(--primary-color, #4392F1);
+  border: 1.5px solid var(--primary-color, #f5ead7);
   outline: none;
 }
 
 button[type="submit"] {
   padding: 12px 0;
-  background-color: #4392F1;
+  background-color: #f5ead7;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -139,13 +139,13 @@ button[type="submit"] {
   cursor: pointer;
   margin-top: 0.5rem;
   transition: background-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(67,146,241,0.08);
+  box-shadow: 0 2px 8px rgba(245,234,215,0.08);
   width: 100%;
 }
 
 button[type="submit"]:hover {
-  background-color: #4346f1;
-  box-shadow: 0 4px 16px rgba(67,146,241,0.12);
+  background-color: #e8d9bf;
+  box-shadow: 0 4px 16px rgba(245,234,215,0.12);
 }
 
 .error {

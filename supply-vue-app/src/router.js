@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from './pages/HomePage.vue'
 import ProfilePage from './pages/ProfilePage.vue'
 import LoginPage from './pages/LoginPage.vue'
+import CreateProductPage from './pages/CreateProductPage.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const routes = [
@@ -23,6 +24,14 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: LoginPage
+    },
+    {
+        path: '/create-product',
+        name: 'CreateProduct',
+        component: CreateProductPage,
+        meta: {
+            requiresAuth: true,
+        },
     }
 ]
 
