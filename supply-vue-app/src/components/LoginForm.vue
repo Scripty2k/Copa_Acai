@@ -131,7 +131,7 @@ input[type="password"]:focus {
 button[type="submit"] {
   padding: 12px 0;
   background-color: #f5ead7;
-  color: #fff;
+  color: #000000;
   border: none;
   border-radius: 5px;
   font-size: 1.1rem;
@@ -144,7 +144,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #e8d9bf;
+  background-color: #e2bceb;
   box-shadow: 0 4px 16px rgba(245,234,215,0.12);
 }
 

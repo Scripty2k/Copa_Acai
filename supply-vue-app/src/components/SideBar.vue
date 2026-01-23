@@ -299,7 +299,7 @@ defineExpose({
 }
 
 .sidebar-nav a:hover {
-  background: var(--primary-color, #f5ead7);
+  background: #e2bceb;
   color: #fff;
 }
 
@@ -326,7 +326,7 @@ defineExpose({
 }
 
 .logout-btn:hover {
-  background: var(--primary-color, #f5ead7);
+  background: #e2bceb;
   color: #fff;
 }
 </style>
