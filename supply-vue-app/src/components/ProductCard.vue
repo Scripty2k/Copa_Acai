@@ -94,15 +94,25 @@ async function addToRestock() {
 
 <style scoped lang="scss">
 .item-card {
-  background: #fff;
-  border-radius: 12px;
+  background: url('@/assets/images/border.png') center/contain no-repeat;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
-  border: 1px solid #e5e0d8;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.item-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  font-size: 0.85rem;
+  margin: 0 0 0.75rem 0;
+  text-align: center;
 }
 
 .quantity-section {
@@ -115,6 +125,7 @@ async function addToRestock() {
   font-size: 0.9rem;
   color: #666;
   font-weight: 500;
+  text-align: center;
 }
 
 .quantity-controls {
@@ -125,13 +136,13 @@ async function addToRestock() {
 }
 
 .qty-btn {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border: 2px solid #f5ead7;
   border-radius: 6px;
   background-color: white;
   color: #1c1c1c;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -165,13 +176,13 @@ async function addToRestock() {
 }
 
 .add-restock-btn {
-  width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: none;
   border-radius: 6px;
   background-color: #28a745;
   color: white;
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -215,13 +226,13 @@ async function addToRestock() {
 }
 
 .delete-btn {
-  width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: none;
   border-radius: 6px;
   background-color: #dc3545;
   color: white;
   font-weight: 500;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   margin-top: auto;
